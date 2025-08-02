@@ -1,0 +1,86 @@
+{{> top }}
+<div class="top2">
+	<div>
+		<h2>QSL Data</h2>
+		<div class="table2">
+{{# qsldata }}
+			<div>{{ label }}</div>
+			<div>{{ value }}</div>
+{{/ qsldata }}
+		</div>
+	</div>
+	<div>
+		<h2>Awards Eligibility</h2>
+		<div class="warnings">
+{{# warnings }}
+			<div>{{ . }}</div>
+{{/ warnings }}
+		</div>
+		<div class="table2">
+{{# eligible }}
+			<div>{{ label }}</div>
+			<div>{{ value }}</div>
+{{/ eligible }}
+		</div>
+	</div>
+	<div class="links">
+		<div><a href="{{ imglink }}&dl=img">Download image</a></div>
+		<div><a href="{{ url }}&dl=json">Download JSON</a></div>
+		<div><a href="{{ datalink }}&dl=qr">Download QR Code</a></div>
+	</div>
+</div>
+<div id="imgs">
+	<img class="qslcard" src="{{ qslImage }}">
+	<div style="margin-top:0.5rem">
+		Get image with:
+		<label><input type="radio" name="idata" value="{{ bglink }}" class="isel" {{ isel }}> Only URL</label>
+		<label><input type="radio" name="idata" value="{{ bglink }}&data=1" class="isel" {{ isel1 }}> URL plus data</label>
+		<label><input type="radio" name="idata" value="{{ bglink }}&data=sig" class="isel" {{ iselsig }}> URL plus data plus signature</label>
+	</div>
+	<div>
+		Background: <label><input type="radio" name="bg" value="" class="bgsel" {{ bgsel1 }}> Diamond</label>
+		<label><input type="radio" name="bg" value="2" class="bgsel" {{ bgsel2 }}> Radio</label>
+		<label><input type="radio" name="bg" value="3" class="bgsel" {{ bgsel3 }}> None</label>
+	</div>
+</div>
+<style>
+	#imgs {
+		height: calc({{ imgs }}px + 3.5rem);
+	}
+</style>
+<h3>Contents of QR Code</h3>
+<pre>{{ qrtext }}</pre>
+<script>
+	addEventListener("DOMContentLoaded", () => {
+		var sels = document.getElementsByClassName('bgsel');
+		for (var i = 0; i < sels.length; i++) {
+			sels.item(i).addEventListener("click", (e) => {
+				chbg(e.srcElement.getAttribute('value'));
+			});
+		}
+		var isels = document.getElementsByClassName('isel');
+		for (var i = 0; i < isels.length; i++) {
+			isels.item(i).addEventListener("click", (e) => {
+				showShields();
+				window.location.href = e.srcElement.getAttribute('value');
+			});
+		}
+	});
+
+	function chbg(item) {
+		var u = '{{{ datalink }}}';
+		if (item)
+			u += '&bg='+item;
+		var shield = document.getElementById('imgshield');
+		showShields();
+		window.location.href = u;
+	}
+
+	function showShields() {
+		var shields = document.getElementsByClassName('shield');
+		for (var i = 0; i < shields.length; i++)
+			shields.item(i).setAttribute('style', 'display:initial');
+	}
+</script>
+<div id="imgshield" class="shield"></div>
+{{> bottom }}

@@ -1,0 +1,12 @@
+{
+    "name": "arrl/beta-lotw",
+    "require": {
+        "mustache/mustache": "^3.0"
+    },
+    "authors": [
+        {
+            "name": "Jon Bloom",
+            "email": "jon@3blooms.net"
+        }
+    ]
+}

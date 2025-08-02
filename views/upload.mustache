@@ -1,0 +1,21 @@
+{{> top }}
+<style>
+	.flexc {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+</style>
+<div class="flexc">
+	<h2>Upload an electronic QSL file (JSON)</h2>
+	<div>
+		<form method="post" enctype="multipart/form-data">
+			<input type="hidden" name="upload" value="1">
+			<div class="flexc">
+				<div><input type="file" name="qslup"></div>
+				<div><button type="submit">Upload</button></div>
+			</div>
+		</form>
+	</div>
+</div>
+{{> bottom }}
