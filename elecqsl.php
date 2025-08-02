@@ -188,6 +188,8 @@ class Pg {
 		$x = ($this->flds['worked'] * $this->imgw) / $this->imgo;
 		$yincr = ($box[1] - $box[7]) * 1.7;
 		foreach ($this->locfields as $f => $lead) {
+			if (!isset($this->qsl->data->$f))
+				continue;
 			$font = $datafont;
 			if (is_array($lead)) {
 				$var = $lead[1];
@@ -196,7 +198,7 @@ class Pg {
 				$font = $stateFont;
 			} else
 				$val = $this->qsl->data->$f;
-			if (isset($this->qsl->data->$f) && $val) {
+			if ($val) {
 				$text = $lead.$val;
 				imagefttext($img, $this->fieldsize, 0, $x, $fldy, 0, $font, $text);
 				$fldy += $yincr;
